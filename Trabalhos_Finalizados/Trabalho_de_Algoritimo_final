@@ -1,12 +1,23 @@
-//Nome:Lucas Pontes Santana //Matricula:Uc 21105916  //Curso: Eng.Software //lucas.pontes@a.ucb.br
+//Nome:Lucas Pontes Santana 
+//Matricula:Uc 21105916  
+//Curso: Eng.Software 
+//lucas.pontes@a.ucb.br
+
+//Para mudar as cores de texto eu adicionei um pacote oas arquivos e adicionei a biblioteca
+
+#include<conio.h>
 
 #include<stdio.h>//biblioteca para printf e scanf
 #include<stdlib.h>//biblioteca para a utilização do system
 #include<string.h>//biblioteca para strlen e strcmp 
-#include<conio.h>//biblioteca para utilzar getch,getchar,getch
-#include<conio.c>// mudar as cores de texto entre outras funções
+//biblioteca para utilzar getch,getchar,getch
 #include<stddef.h>//fornece definições da linguagem de programação C para o NULL
-#define SIZE 200 // define size como 200 espaços na memoria
+#define SIZE 200 
+#define RED "\x1b[91m"
+#define GREEN "\x1b[32m"
+#define BLUE "\x1b[34m"
+#define RESET "\x1b[0m"
+// define size como 200 espaços na memoria
 // Defini como globais porque eu ira usar "void" ,mas não sabia ser era permitido; 
 char nome [SIZE] [41];//matriz globais
 int poltrona[SIZE];//matriz globais
@@ -20,7 +31,8 @@ int main(){
 	int opi,i,j,resp,assentos,passagem,passagemdes,ID=-1,soma=0, id,s;
 	char pass[128], user[128], feedbackresp[101];
 do{
-	system("color 70");// mudar a cor do terminal
+	system("chcp 65001");
+// mudar a cor do terminal
 	printf(" |-----------------------|\n");
 	printf(" |        BEM VIDO       |\n");
 	printf(" |           A           |\n");
@@ -238,9 +250,9 @@ do{
    			}
    			else{
    			printf("\nA POLTRONA %i ESTAR DISPONIVEL\n",id);
-   			 textcolor(2);// utilizo duas vez seguidas para alterar apenas o printf e voltar as cores
-			  printf("D\n");			
-			 textcolor(0);
+   			 // utilizo duas vez seguidas para alterar apenas o printf e voltar as cores
+			  printf(GREEN"D\n"RESET);			
+			 
    			}
 			break;//uso um break para quebra o loço para não mostrar as duzentas cadeiras
 	}
@@ -322,9 +334,9 @@ do{// fiz um  pequeno sistema de login para  ficar um pouquinho mas relista
    							if( strcmp(status[i],"R")==0){// utilizei a mesma logicas  de confrimar e excluir so que para  mostrar apenas as opiçoes que eu queria 
    							printf("\nNOME :%s \nIDADE :%i\nPOLTRONA:%i \nVALOR DA PASSAGEM :$%i \n  DESTINO :%s \n\n",nome[i] , idade[i],poltrona[i],passagemde[i],destino[i] );
 							printf("STATUS: ");
-							textcolor(4);
-							printf("%s\n",status[i]);
-							textcolor(0);
+						
+							printf(RED"%s\n"RESET,status[i]);
+							
 						   } }
 						  printf(" |----------------------|\n");
 							printf(" | DESEJA SAIR  ?       |\n");
@@ -347,9 +359,9 @@ do{// fiz um  pequeno sistema de login para  ficar um pouquinho mas relista
    								printf("\nNOME :%s \nIDADE :%i\nPOLTRONA:%i \nVALOR DA PASSAGEM :$%i \n  DESTINO :%s\n\n"
 								   ,nome[i] , idade[i],poltrona[i],passagemde[i],destino[i] );
 								  printf("STATUS: ");
-								   textcolor(1);
-								   printf("%s\n",status[i]);
-								   textcolor(0);
+								   
+								   printf(BLUE"%s\n"RESET,status[i]);
+								   
 						   } }
 						   	printf(" |----------------------|\n");
 							printf(" | DESEJA SAIR  ?       |\n");
