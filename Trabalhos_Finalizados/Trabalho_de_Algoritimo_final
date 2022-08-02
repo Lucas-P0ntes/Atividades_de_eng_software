@@ -1,0 +1,442 @@
+//Nome:Lucas Pontes Santana 
+//Matricula:Uc 21105916  
+//Curso: Eng.Software 
+//lucas.pontes@a.ucb.br
+
+//Para mudar as cores de texto eu adicionei um pacote oas arquivos e adicionei a biblioteca
+
+#include<conio.h>
+
+#include<stdio.h>//biblioteca para printf e scanf
+#include<stdlib.h>//biblioteca para a utilização do system
+#include<string.h>//biblioteca para strlen e strcmp 
+//biblioteca para utilzar getch,getchar,getch
+#include<stddef.h>//fornece definições da linguagem de programação C para o NULL
+#define SIZE 200 
+#define RED "\x1b[91m"
+#define GREEN "\x1b[32m"
+#define BLUE "\x1b[34m"
+#define RESET "\x1b[0m"
+// define size como 200 espaços na memoria
+// Defini como globais porque eu ira usar "void" ,mas não sabia ser era permitido; 
+char nome [SIZE] [41];//matriz globais
+int poltrona[SIZE];//matriz globais
+char status[SIZE][2] ;//matriz globais
+int passagemde[SIZE];//matriz globais
+int idade[SIZE];//matriz globais
+char voo[SIZE][7];//matriz globais
+char destino[SIZE][11];//matriz globais
+char feedback[SIZE][101];//matriz globais
+int main(){
+	int opi,i,j,resp,assentos,passagem,passagemdes,ID=-1,soma=0, id,s;
+	char pass[128], user[128], feedbackresp[101];
+do{
+	system("chcp 65001");
+// mudar a cor do terminal
+	printf(" |-----------------------|\n");
+	printf(" |        BEM VIDO       |\n");
+	printf(" |           A           |\n");
+	printf(" |        SALUMAR        |\n");
+	printf(" |      LINHAS AEREAS    |\n");
+	printf(" |-----------------------|\n\n");
+	
+    printf(" |---------------------------------------------|\n");
+	printf(" |ESCOLHA UMA OPICAO PARA SEGUIR EM FRENTE     |\n");
+	printf(" |---------------------------------------------|\n");
+	printf(" |(1)--COMPAR VIAGEM                           |\n");
+	printf(" |(2)--COMFIRMA PASSAGEM                       |\n");
+	printf(" |(3)--VERIFICAR AS POLTRONAS DISPONIVEIS      |\n");
+	printf(" |(4)--CANCELAMENTO DE RESERVA                 |\n");
+	printf(" |(5)--ESTARTISTICAS DO VOO(SO ADMINISTRADORES)|\n");
+	printf(" |---------------------------------------------|\n");
+	scanf("%i",&opi);
+	fflush(stdin);
+	
+switch(opi){// O progama vai ser todo rodado em estrutura switch em vez de void
+
+// A primeira opição do switch vai ser feita para comprar a viagem ;
+do{
+	case 1 : 
+	system ("cls");// limpa a tela;
+	static int linha;// aloca oas dados na linha estatica 
+// Algoritimo para pedir o nome e amazenar , com uma condição caso a condição não seja atingida ,ou seja, não permite o usuario deixar em branco;
+do{
+	printf("|-------------------------------------------------|\n");
+	printf("QUAL E SEU NOME ? \n");
+	printf("|-------------------------------------------------|\n");
+	gets(nome[linha]);
+	fflush(stdin);
+	if(!(stricmp(nome[linha],"")==0)){
+		printf("SUCESSO\n");
+	}
+	else{
+		printf(" |-----------------|\n");
+		printf(" |     ERRO!!!     |\n");
+		printf(" |-----------------|\n");
+		printf(" |TENTAR NOVAMENTE |\n");
+		printf(" |-----------------|\n");		
+	}
+}while((stricmp(nome[linha],"")==0));
+//	Algoritimo para pedir a localização e amazenar , com uma condição caso a condição não seja atingida ,ou seja, não permite o usuario deixar em branco;
+	do{
+		printf("|-------------------------------------------------|\n");
+		printf("QUAL O SEU LOCAL DE VIAGEM  ?\n");
+		printf("|-------------------------------------------------|\n");
+		gets(destino[linha]);
+		fflush(stdin);
+		if(!(stricmp(destino[linha],"")==0)){
+			printf("SUCESSO\n");
+		}
+		else {
+			printf(" |-----------------|\n");
+			printf(" |     ERRO!!!     |\n");
+			printf(" |-----------------|\n");
+			printf(" |TENTAR NOVAMENTE |\n");
+			printf(" |-----------------|\n");		
+		}
+	}while((stricmp(destino[linha],"")==0));
+//Algoritimo para pedir o valor da passagem com validação  de  ser maior  que zero;	
+	do{
+		printf("|-------------------------------------------------|\n");
+		printf("QUAL O VALOR DA  PASAGEM PARA O(A) %s ?\n",destino[linha]);
+		printf("|-------------------------------------------------|\n");
+		scanf("%i",&passagem);
+			fflush(stdin);
+		if ( passagem >0){
+			printf("sucesso\n");
+		}
+		else {
+			printf(" |-----------------|\n");
+			printf(" |     ERRO!!!     |\n");
+			printf(" |-----------------|\n");
+			printf(" |TENTAR NOVAMENTE |\n");
+			printf(" |-----------------|\n");
+		}
+	}while(!(passagem>0));
+//Algoritimo  para receber  a quantidade de acessentos e validado para um numero minimo de acessentos e um mumero maximo;  
+	do{
+		printf("|-------------------------------------------------|\n");
+		printf("QUAL A QUANTIDADE DE ACESSENTOS DISPONIVEIS PARA %s ?\n",destino);
+		printf("|-------------------------------------------------|\n");
+		scanf("%i",&assentos);
+			fflush(stdin);
+		if ( assentos >=90 && assentos <=200){
+			printf("sucesso\n");
+		}
+		else {
+			printf(" |-----------------|\n");
+			printf(" |     ERRO!!!     |\n");
+			printf(" |-----------------|\n");
+			printf(" |TENTAR NOVAMENTE |\n");
+			printf(" |-----------------|\n");
+		}
+	}while(!(assentos >=90 && assentos <=200));
+//Algoritimo para receber o acessento que a pessoa  deseja limitado  ao numero de acessentos validados anteriomente
+	do{
+		printf("|-------------------------------------------------|\n");
+		printf("QUAL O  ACESSENTO QUE DESEJA RESERVAR ?\n");
+		printf("|-------------------------------------------------|\n");
+		scanf("%i",&poltrona[linha]);
+			fflush(stdin);
+		if(poltrona[linha] <= assentos){
+			printf("SUCESSO\n");
+		}
+		else {
+			printf(" |-----------------|\n");
+			printf(" |     ERRO!!!     |\n");
+			printf(" |-----------------|\n");
+			printf(" |TENTAR NOVAMENTE |\n");
+			printf(" |-----------------|\n");
+		}
+	}while(!(poltrona[linha] <=assentos));
+//Algoritimo pede a idade do usuario e ja calcula baseado no valor da passagem  pedida anteriomente;
+	do{
+		printf("|-------------------------------------------------|\n");
+		printf("QUAL A IDADE DO PASSAGEIRO  ?\n");
+		printf("|-------------------------------------------------|\n");
+				scanf("%i",&idade[linha]);
+		fflush(stdin);
+		if(idade[linha] <=5 ){
+			passagemde[linha]=	passagem * 0.5;
+			printf("SUCESSO, DESCONTO APLICADO VALOR ATUALIZADO: $%i\n\n",passagemde[linha]);
+		}
+		else {
+			passagemde[linha]= passagem ;
+			printf ("SUCESSO\n");		
+		}
+			printf(" |------------------------------|\n");
+			printf(" |     COMFIRMAR ? %i ANOS      |\n",idade[linha]);
+			printf(" |------------------------------|\n");
+			printf(" |(1)NAO                        |\n");
+			printf(" |(2)SIM                        |\n");
+			printf(" |------------------------------|\n");
+		fflush(stdin);
+		scanf("%i",&resp);
+		fflush(stdin);
+	}while(resp== 1);
+	//Nessa parte e adicionado um indentificado (ID) quem vai atribuir sempre mais um na varivel definada la em cima 
+		system("cls");//limpa a tela
+		ID++;
+		printf("|----------------------------------------------------------------|\n");
+		printf("|PARA CONFIRMAR SUA COMPRAR UTILIZE O SEU INDENTIFICADOR:        |\n");
+		printf("|----------------------------------------------------------------|\n");
+		printf("                   |--------|\n");
+		printf("                   |ID-> %i  |\n",ID); // Atribui um indentificado para podemos manipular os itens nessa possição linha
+		printf("                   |--------|\n");
+		printf("|----------------------------------------------------------------|\n");
+		printf("|O SEU INDENTIFICADOR E UNICO E GERADO APENAS UMA VEZ;           |\n");
+		printf("|ANOTE EM UM PAPEL E GUARDE PARA CONFIRMAR OU CANCELAR A PASSAGEM|\n");
+		printf("|VA ATE O MENU 2 PARA CONFIRMAR A COMPRAR                        |\n");
+		printf("|----------------------------------------------------------------|\n");
+		system("PAUSE");
+	 	strcpy(status[linha], "R");//Utilizo a função para poder mudar  a passagem e definir como reserva (R)
+	 	linha++;	// toda vez que a pessoa quiser  cadastrar sempre vai ser   numa nova linha por isso eu defini la em cima 
+			printf(" |------------------------------|\n");
+			printf(" | MUITO OBRIGADO PELA RESERVA  |\n");
+			printf(" |------------------------------|\n");
+			printf(" |(1)COMPAR OUTRA VIAGEM        |\n");
+			printf(" |(2)VOLTAR AO MENU             |\n");
+			printf(" |------------------------------|\n");
+			scanf("%i",&resp);
+			fflush(stdin);
+			system ("cls");
+}while(resp==1);
+	break;	
+// A segunda opição do switch vai ser feita para comfirmar a passagem  utilizando o ID que fopi passado anteriomente; 
+   	case 2 :
+   	system("cls");
+do{	
+	printf("|---------------------------------------------|\n"); 
+   	printf("|PARA CONFIRMAR PECISSAMOS DO SEU ID          |\n");
+   	printf("|---------------------------------------------|\n");
+   	printf("ID:");
+   	scanf("%i",&ID);
+   	for ( i=0; i<SIZE; i++ ){  //Usei um laço para rodar todos as posições da matriz e mudar apenas a que fopi passada
+    	for ( j=0; j<2; j++ )
+    	{
+    		if(status[i] ==status[ID]){//utilizo o id para saber qual a poltrona que serar mudada
+    		strcpy(status[i], "C");	//muda  o estadus de reserva para confirmar
+		}
+    }}
+    printf("|---------------------------------------------|\n"); 
+   	printf("|SUA PASSAGEM Fopi CONFIRMADA                  |\n");
+   	printf("|---------------------------------------------|\n");
+   			printf(" |-------------------------------|\n");
+			printf(" | MUITO OBRIGADO POR CONFIRMAR  |\n");
+			printf(" |--------------------------=----|\n");
+			printf(" |(1)COMFIRMAR OUTRA VIAGEM      |\n");
+			printf(" |(2)VOLTAR AO MENU              |\n");
+			printf(" |-------------------------------|\n");
+			scanf("%i",&resp);
+			fflush(stdin);
+			system ("cls");
+}while(resp==1);
+	break;
+//A terceira opição  e feita para saber que cadeiras estão disponiveis;
+    case  3: 
+    system ("cls");
+    do{
+    	printf(" |-------------------------------------------------|\n");
+    	printf(" |QUAL CADEIRA  VOCÊ QUER SABER SE TA DISPONIVEL ? |\n");
+    	printf(" |-------------------------------------------------|\n");
+    	printf("POLTRONA:");
+    	scanf("%i",&id);
+   		for(i=0; i<SIZE;i++){
+   			if(poltrona[i]==id){
+   				printf(" |-----------------------------------------------|\n");
+				printf(" |SINTO MUITO MAS A POLTRONA:%i  JA FOI RESERVADA|\n",id );
+				printf(" |  AINDA TEMOS OUTROS LUGARES DESPONIVEIS       |\n");
+				printf(" |-----------------------------------------------|\n\n");
+   			}
+   			else{
+   			printf("\nA POLTRONA %i ESTAR DISPONIVEL\n",id);
+   			 // utilizo duas vez seguidas para alterar apenas o printf e voltar as cores
+			  printf(GREEN"D\n"RESET);			
+			 
+   			}
+			break;//uso um break para quebra o loço para não mostrar as duzentas cadeiras
+	}
+		printf(" |----------------------------|\n");
+		printf(" | DESEJA TENTA NOVAMENTE  ?  |\n");
+		printf(" |----------------------------|\n");
+		printf(" |(1)SIM                      |\n");
+		printf(" |(2)NAO                      |\n");
+		printf(" |----------------------------|\n");
+		scanf("%i",&resp);
+		fflush(stdin);	
+		}while (resp==1);
+	break;
+// A quarta opição e serve para excluir  uma  cadeira utilizando o ID; 
+	case  4:
+		system("cls");
+		do{
+	printf("|---------------------------------------------|\n"); 
+   	printf("|PARA EXCLUIR PECISSAMOS DO SEU ID          |\n");
+   	printf("|---------------------------------------------|\n");
+   	printf("ID:");
+   	scanf("%i",&ID);
+   			for ( i=0; i<SIZE; i++ ){
+    			for ( j=0; j<2; j++ ){ //utilizo a mesma logica de confirmar  so que altero para  excluir 
+    				if(status[i] ==status[ID] && strcmp(status[i],"R")==0){
+    					strcpy(status[i], "E");	
+    					printf("DEIXE SEU FEEDBACK PARA QUE POSSAMOS MELHORAR NOSSO SERVIÇO :\n");
+    					fflush(stdin);
+    					gets(feedbackresp);
+    					 fflush(stdin);
+    					strcpy(feedback[i],feedbackresp);
+    					
+   					}
+			    }
+			}
+	printf("|---------------------------------------------|\n"); 
+   	printf("|SUA PASSAGEM FOI EXCLUIDA                    |\n");
+   	printf("|---------------------------------------------|\n");
+			printf(" |--------------------------=----|\n");
+			printf(" |(1)EXCLUIR OUTRA VIAGEM        |\n");
+			printf(" |(2)VOLTAR AO MENU              |\n");
+			printf(" |-------------------------------|\n");
+			scanf("%i",&resp);
+			fflush(stdin);
+			system ("cls");
+		}while(resp==1);
+	break;
+//A quinta opição eu quis  ser criativo e usei ela para poder ser apenas utilizada pela empresa com um sistema de login :)
+	case 5 : 
+	system("cls");
+do{// fiz um  pequeno sistema de login para  ficar um pouquinho mas relista
+		printf("|---------------------------------------------|\n");
+		printf("| PAGINA RESTRITA APENAS PARA FUNCIONARIOS    |\n");
+		printf("|---------------------------------------------|\n");
+		printf("Usuario :");
+		scanf("%s",&user);
+		fflush(stdin);
+		printf("Senha:");
+		scanf("%s",&pass);
+		fflush(stdin);
+		if(strcmp(user,"admin")==0 && strcmp(pass,"admin")==0 ){
+			
+			printf(" |---------------------------------------------|\n");
+			printf(" |Escolha uma opição para seguir em frente     |\n");
+			printf(" |---------------------------------------------|\n");
+			printf(" |(1)--Reservas feitas                         |\n");
+			printf(" |(2)--PASSAGENS COMFIRMADAS                   |\n");
+			printf(" |(3)--VALOR DE TOTAL DAS VENDAS CONFIRMADAS   |\n");
+			printf(" |(4)--PASSAGEM QUE FORAM EXCLUIDAS            |\n");
+			printf(" |---------------------------------------------|\n");
+			scanf("%i",&opi);
+			fflush(stdin);	
+				switch(opi){
+//A primeira opição  mostra todas as informações  de uma pessoa que RESERVOU uma viagem					
+					case 1: 
+					system("cls");
+					do{
+   						for(i=0; i<SIZE;i++){
+   							if( strcmp(status[i],"R")==0){// utilizei a mesma logicas  de confrimar e excluir so que para  mostrar apenas as opiçoes que eu queria 
+   							printf("\nNOME :%s \nIDADE :%i\nPOLTRONA:%i \nVALOR DA PASSAGEM :$%i \n  DESTINO :%s \n\n",nome[i] , idade[i],poltrona[i],passagemde[i],destino[i] );
+							printf("STATUS: ");
+						
+							printf(RED"%s\n"RESET,status[i]);
+							
+						   } }
+						  printf(" |----------------------|\n");
+							printf(" | DESEJA SAIR  ?       |\n");
+							printf(" |----------------------|\n");
+							printf(" |(1)MENU ADMIN         |\n");
+							printf(" |(2)MENU PRINCIPAL     |\n");
+							printf(" |(3)VERIFICAR NOVAMENTE|\n");
+							printf(" |----------------------|\n");
+									scanf("%i",&resp);
+									fflush(stdin);
+								system ("cls");
+					   }while (resp==3);
+					break;
+//A segunda opição  mostra todas as informações  de uma pessoa que COMFRIMOU uma viagem		
+   					case 2: 
+   					system("cls");
+   					do{
+   						for(i=0; i<SIZE;i++  ){// utilizei a mesma logicas  de confrimar e excluir so que para  mostrar apenas as opiçoes que eu queria
+   							if(poltrona[i]>0&& strcmp(status[i],"C")==0){
+   								printf("\nNOME :%s \nIDADE :%i\nPOLTRONA:%i \nVALOR DA PASSAGEM :$%i \n  DESTINO :%s\n\n"
+								   ,nome[i] , idade[i],poltrona[i],passagemde[i],destino[i] );
+								  printf("STATUS: ");
+								   
+								   printf(BLUE"%s\n"RESET,status[i]);
+								   
+						   } }
+						   	printf(" |----------------------|\n");
+							printf(" | DESEJA SAIR  ?       |\n");
+							printf(" |----------------------|\n");
+							printf(" |(1)MENU ADMIN         |\n");
+							printf(" |(2)MENU PRINCIPAL     |\n");
+							printf(" |(3)VERIFICAR NOVAMENTE|\n");
+							printf(" |----------------------|\n");
+									scanf("%i",&resp);
+									fflush(stdin);
+								system ("cls");
+					   }while (resp==3);
+					break;
+//A terceira opição ele soma  todas a passagem  que foram confirmadas				
+					case 3: 
+					system("cls");
+						do{
+   						for(i=0; i<SIZE;i++){
+						   if(strcmp(status[i],"C")==0){// atribui uma codição para poder somar apenas as confirmadas 
+						   	soma =soma+ passagemde[i];//usei soma sempre para somar com o valor que eu ja tenho armazenado
+						   }						   
+   							}
+							printf("O valor total e %i\n",soma);
+						   	printf(" |----------------------|\n");
+							printf(" | DESEJA SAIR  ?       |\n");
+							printf(" |----------------------|\n");
+							printf(" |(1)MENU ADMIN         |\n");
+							printf(" |(2)MENU PRINCIPAL     |\n");
+							printf(" |(3)VERIFICAR NOVAMENTE|\n");
+							printf(" |----------------------|\n");
+							scanf("%i",&resp);
+							fflush(stdin);
+						system ("cls");
+					   }while (resp==3);
+					break;
+					case 4: 
+   						system("cls");
+   						do{
+   							for(i=0; i<SIZE;i++){
+   							if( strcmp(status[i],"E")==0){// utilizei a mesma logicas  de confrimar e excluir so que para  mostrar apenas as opiçao excluida;
+   							printf("\nNOME :%s \nIDADE :%i\nPOLTRONA:%i \nVALOR DA PASSAGEM :$%i \nDESTINO :%s \n",nome[i] , idade[i],poltrona[i],passagemde[i],destino[i] );
+							printf("STATUS: ");
+							printf("%s\n",status[i]);					
+							printf("FEEDBACK MOITIVO DA DESISTENCIA DA COMPRAR :\n %s",feedback[i]);							
+						   } }
+						   printf("\n");
+						   	printf(" |----------------------|\n");
+							printf(" | DESEJA SAIR  ?       |\n");
+							printf(" |----------------------|\n");
+							printf(" |(1)MENU ADMIN         |\n");
+							printf(" |(2)MENU PRINCIPAL     |\n");
+							printf(" |(3)VERIFICAR NOVAMENTE|\n");
+							printf(" |----------------------|\n");
+							scanf("%i",&resp);
+							fflush(stdin);
+						system ("cls");							
+   						}while(resp==3);
+   					break;
+				}
+		}
+//Condição caso  a pessoa erra a senha 
+		else{
+			printf(" |--------------------|\n");
+			printf(" |    ACESSO NEGADO   |\n");
+			printf(" |--------------------|\n");
+			printf(" |(1)Tentar novamente |\n");
+			printf(" |(2)sair             |\n");
+			printf(" |--------------------|\n");
+			scanf("%i",&resp);
+			fflush(stdin);
+			system ("cls");
+		}
+	}while (resp==1);
+	break;
+}
+}while (resp == 2);
+return 0;
+}
